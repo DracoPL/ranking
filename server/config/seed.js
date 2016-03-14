@@ -6,6 +6,7 @@
 'use strict';
 import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
+import Player from '../api/player/player.model';
 
 Thing.find({}).remove()
   .then(() => {
@@ -36,6 +37,29 @@ Thing.find({}).remove()
       name: 'Deployment Ready',
       info: 'Easily deploy your app to Heroku or Openshift with the heroku ' +
              'and openshift subgenerators'
+    });
+  });
+
+Player.find({}).remove()
+  .then(() => {
+    Player.create({
+      name: 'Domingo',
+      rank: 133.5
+    }, {
+      name: 'Rotti',
+      rank: 160.0
+    }, {
+      name: 'Ninjaska',
+      rank: 133.5
+    }, {
+      name: 'Warrior1980',
+      rank: 139.6
+    }, {
+      name: 'Juniooor7',
+      rank: 104.8
+    }, {
+      name: 'Shawass',
+      rank: 120.2
     });
   });
 

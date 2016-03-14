@@ -3,14 +3,16 @@
 (function() {
 
 class AdminController {
-  constructor(User) {
+  constructor(User, Modal) {
     // Use the User $resource to fetch all users
-    this.users = User.query();
-  }
+    var users = User.query();
+    
+    this.users = users;
 
-  delete(user) {
-    user.$remove();
-    this.users.splice(this.users.indexOf(user), 1);
+    this.delete = Modal.confirm.delete(function(user) {
+      user.$remove();
+      users.splice(users.indexOf(user), 1);
+    })
   }
 }
 
