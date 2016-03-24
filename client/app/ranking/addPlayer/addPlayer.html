@@ -1,0 +1,37 @@
+<md-dialog aria-label="Add player"  ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add player</h2>
+        <span flex></span>
+        <md-button ng-click="closeDialog()">
+          X
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+              <label>Player Name</label>
+              <input ng-model="newPlayer.name">
+          </md-input-container>
+        </div>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block">
+              <label>Rank</label>
+              <input ng-model="newPlayer.rank" type="number">
+          </md-input-container>
+        </div>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <md-checkbox ng-model="addAnother" aria-label="Checkbox 1">
+            Add another
+          </md-checkbox>
+      <md-button class="md-raised md-primary" ng-click="addNewPlayer()" style="margin-right:20px;">
+        Add player
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

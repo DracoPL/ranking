@@ -4,7 +4,7 @@ angular.module('rankingApp')
   .config(function($stateProvider) {
     $stateProvider
       .state('main', {
-        url: '/',
+        url: '/main',
         template: '<main></main>'
       });
   });

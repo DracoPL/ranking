@@ -4,15 +4,17 @@
 class RankingComponent {
   constructor($http) {
     this.$http = $http;
-
-    this.message = 'Hello';
     this.players = [];
   }
 
-  $onInit() {
+  fetchPlayers() {
     this.$http.get('/api/players').then(response => {
       this.players = response.data;
-    })
+    });
+  }
+
+  $onInit() {
+    this.fetchPlayers();
   }
 }
 

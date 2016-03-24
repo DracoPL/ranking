@@ -2,11 +2,22 @@
   <div class="col-lg-12">
     <h1 class="page-header">ELO Warszawskiej Federacji Blood Bowl</h1>
     <div class="row" >
-      <ol class="col-md-4 col-lg-4 col-sm-6">
-        <li ng-repeat="player in $ctrl.players">
-          {{player.name}} ({{player.rank}})
-        </li>
-      </ol>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>Rank</th>
+          </tr>
+          <tbody>
+            <tr ng-repeat="player in $ctrl.players">
+              <td>{{$index+1}}</td>
+              <td>{{player.name}}</td>
+              <td>{{player.rank}}</td>
+            </tr>
+        </tbody>
+      </table>
     </div>
+    <add-player callback="$ctrl.fetchPlayers()"></add-player>
   </div>
 </div>
