@@ -1,0 +1,62 @@
+<md-dialog aria-label="Add match"  ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add match</h2>
+        <span flex></span>
+        <md-button ng-click="closeDialog()">
+          X
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout-gt-sm="row">
+          <!-- <md-autocomplete
+                md-selected-item="ctrl.selectedHomeTeam"
+                md-search-text="ctrl.searchHomeTeamText"
+                md-items="item in ctrl.querySearch(ctrl.searchHomeTeamText)"
+                md-item-text="item.name"
+                md-min-length="0"
+                placeholder="Home team">
+            <md-item-template>
+              <span md-highlight-text="ctrl.searchHomeTeamText" md-highlight-flags="^i">{{item.name}}</span>
+            </md-item-template>
+            <md-not-found>
+              No states matching "{{ctrl.searchHomeTeamText}}" were found.
+              <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+            </md-not-found>
+          </md-autocomplete> -->
+          <md-input-container>
+            <label>Home team</label>
+            <md-select placeholder="Home team" ng-model="newMatch.h_team" md-on-open="loadPlayers()" style="min-width: 200px;">
+              <md-option ng-value="player.name" ng-repeat="player in players">{{player.name}}</md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container>
+              <label>Home team score</label>
+              <input ng-model="newMatch.h_score" type="number">
+          </md-input-container>
+          <md-input-container>
+            <label>Away team</label>
+            <md-select placeholder="Away team" ng-model="newMatch.a_team" md-on-open="loadPlayers()" style="min-width: 200px;">
+              <md-option ng-value="player.name" ng-repeat="player in players">{{player.name}}</md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container>
+              <label>Away team score</label>
+              <input ng-model="newMatch.a_score" type="number">
+          </md-input-container>
+        </div>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <md-checkbox ng-model="addAnother" aria-label="Add another checkbox">
+        Add another
+      </md-checkbox>
+      <md-button class="md-raised md-primary" ng-click="addNewMatch()" style="margin-right:20px;">
+        Add match
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

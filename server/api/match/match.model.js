@@ -10,7 +10,8 @@ var MatchSchema = new mongoose.Schema({
   h_score: Number,
   a_score: Number,
   type: Number,
-  points: Number
+  h_points: Number,
+  a_points: Number
 });
 
 export default mongoose.model('Match', MatchSchema);

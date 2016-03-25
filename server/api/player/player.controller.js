@@ -61,7 +61,9 @@ function handleError(res, statusCode) {
 
 // Gets a list of Players
 export function index(req, res) {
-  return Player.find().sort('-rank').exec()
+  console.log('Req Query');
+  console.log(req.query);
+  return Player.find(req.query).sort('-rank').exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

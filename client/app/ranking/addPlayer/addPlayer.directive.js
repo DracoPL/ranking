@@ -4,7 +4,7 @@ angular.module('rankingApp')
   .directive('addPlayer', function ($mdMedia, $mdDialog) {
     var getDefaultPlayer = function(){
       return {rank: 150};
-    }
+    };
 
     var FormController = function($scope, $http) {
 
@@ -21,7 +21,7 @@ angular.module('rankingApp')
           }
         });
       };
-    }
+    };
 
     return {
       template: '<md-button class="md-primary md-raised" ng-click="openDialog()">Add Player</md-button>',
@@ -29,7 +29,7 @@ angular.module('rankingApp')
       scope: {
         callback: '&callback'
       },
-      link: function (scope, element, attrs) {
+      link: function (scope) {
         scope.newPlayer = getDefaultPlayer();
 
         scope.openDialog = function() {

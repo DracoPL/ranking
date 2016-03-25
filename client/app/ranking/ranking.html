@@ -18,6 +18,7 @@
         </tbody>
       </table>
     </div>
-    <add-player callback="$ctrl.fetchPlayers()"></add-player>
+    <add-player callback="$ctrl.fetchPlayers()" ng-if="$ctrl.Auth.isLoggedIn()"></add-player>
+    <add-match callback="$ctrl.fetchPlayers()" ng-if="$ctrl.Auth.isLoggedIn()"></add-match>
   </div>
 </div>

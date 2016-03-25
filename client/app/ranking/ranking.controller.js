@@ -2,8 +2,9 @@
 (function(){
 
 class RankingComponent {
-  constructor($http) {
+  constructor($http, Auth) {
     this.$http = $http;
+    this.Auth = Auth;
     this.players = [];
   }
 
