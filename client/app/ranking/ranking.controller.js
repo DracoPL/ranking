@@ -31,6 +31,11 @@ class RankingComponent {
     }, 650);
   }
 
+  reloadLists() {
+    this.fetchPlayers();
+    this.fetchMatches();
+  }
+
   $onInit() {
     this.fetchPlayers();
     this.fetchMatches();
