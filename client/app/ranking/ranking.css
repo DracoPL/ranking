@@ -1,0 +1,17 @@
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.blur {
+  opacity: 0.5;
+}
+
+.to-right {
+  text-align: right;
+}
+
+.matches-table tr td:nth-child(2), .matches-table tr td:nth-child(3), .matches-table tr td:nth-child(4) {
+   text-align: right;
+}

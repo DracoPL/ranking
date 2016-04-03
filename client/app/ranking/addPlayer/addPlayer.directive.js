@@ -14,9 +14,9 @@ angular.module('rankingApp')
 
       $scope.addNewPlayer = function () {
         $http.post('/api/players', $scope.newPlayer).then(function(){
-          $scope.callback();
           $scope.newPlayer = getDefaultPlayer();
           if(!$scope.addAnother){
+            $scope.callback();
             $mdDialog.hide();
           }
         });

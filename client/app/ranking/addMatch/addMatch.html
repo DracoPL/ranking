@@ -12,25 +12,11 @@
     <md-dialog-content>
       <div class="md-dialog-content">
         <div layout-gt-sm="row">
-          <!-- <md-autocomplete
-                md-selected-item="ctrl.selectedHomeTeam"
-                md-search-text="ctrl.searchHomeTeamText"
-                md-items="item in ctrl.querySearch(ctrl.searchHomeTeamText)"
-                md-item-text="item.name"
-                md-min-length="0"
-                placeholder="Home team">
-            <md-item-template>
-              <span md-highlight-text="ctrl.searchHomeTeamText" md-highlight-flags="^i">{{item.name}}</span>
-            </md-item-template>
-            <md-not-found>
-              No states matching "{{ctrl.searchHomeTeamText}}" were found.
-              <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
-            </md-not-found>
-          </md-autocomplete> -->
           <md-input-container>
             <label>Home team</label>
-            <md-select placeholder="Home team" ng-model="newMatch.h_team" md-on-open="loadPlayers()" style="min-width: 200px;">
-              <md-option ng-value="player.name" ng-repeat="player in players">{{player.name}}</md-option>
+            <md-select placeholder="Home team" ng-model="newMatch.h_team" ng-model-options="{trackBy: '$value.name'}"
+                       md-on-open="loadPlayers()" style="min-width: 200px;">
+              <md-option ng-value="h_player" ng-repeat="h_player in players">{{h_player.name}}</md-option>
             </md-select>
           </md-input-container>
           <md-input-container>
@@ -39,8 +25,9 @@
           </md-input-container>
           <md-input-container>
             <label>Away team</label>
-            <md-select placeholder="Away team" ng-model="newMatch.a_team" md-on-open="loadPlayers()" style="min-width: 200px;">
-              <md-option ng-value="player.name" ng-repeat="player in players">{{player.name}}</md-option>
+            <md-select placeholder="Away team" ng-model="newMatch.a_team" ng-model-options="{trackBy: '$value.name'}"
+                       md-on-open="loadPlayers()" style="min-width: 200px;">
+              <md-option ng-value="a_player" ng-repeat="a_player in players">{{a_player.name}}</md-option>
             </md-select>
           </md-input-container>
           <md-input-container>
@@ -51,6 +38,10 @@
       </div>
     </md-dialog-content>
     <md-dialog-actions layout="row">
+      <md-button ng-click="closeDialog()">
+        Cancel
+      </md-button>
+      <span flex></span>
       <md-checkbox ng-model="addAnother" aria-label="Add another checkbox">
         Add another
       </md-checkbox>

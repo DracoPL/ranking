@@ -2,20 +2,38 @@
 (function(){
 
 class RankingComponent {
-  constructor($http, Auth) {
+  constructor($http, Auth, $timeout) {
     this.$http = $http;
     this.Auth = Auth;
+    this.timeout = $timeout;
     this.players = [];
   }
 
   fetchPlayers() {
-    this.$http.get('/api/players').then(response => {
-      this.players = response.data;
-    });
+    var ctrl = this;
+    ctrl.loadingPlayers = true;
+    ctrl.timeout(function(){
+      ctrl.$http.get('/api/players').then(response => {
+        ctrl.loadingPlayers = false;
+        ctrl.players = response.data;
+      });
+    }, 650);
+  }
+
+  fetchMatches() {
+    var ctrl = this;
+    ctrl.loadingMatches = true;
+    ctrl.timeout(function(){
+      ctrl.$http.get('/api/matchs').then(response => {
+        ctrl.loadingMatches = false;
+        ctrl.matches = response.data;
+      });
+    }, 650);
   }
 
   $onInit() {
     this.fetchPlayers();
+    this.fetchMatches();
   }
 }
 

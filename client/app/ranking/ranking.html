@@ -1,6 +1,8 @@
 <div class="container">
   <div class="col-lg-12">
     <h1 class="page-header">ELO Warszawskiej Federacji Blood Bowl</h1>
+    <add-player callback="$ctrl.fetchPlayers()" ng-if="$ctrl.Auth.isLoggedIn()"></add-player>
+    <add-match callback="$ctrl.fetchPlayers()" ng-if="$ctrl.Auth.isLoggedIn()"></add-match>
     <div class="row" >
       <table class="table">
         <thead>
@@ -10,7 +12,8 @@
             <th>Rank</th>
           </tr>
           <tbody>
-            <tr ng-repeat="player in $ctrl.players">
+            <md-progress-circular md-mode="indeterminate" md-diameter="96" class="loader" ng-if="$ctrl.loadingPlayers"></md-progress-circular>
+            <tr ng-repeat="player in $ctrl.players" ng-class="{'blur':$ctrl.loadingPlayers}">
               <td>{{$index+1}}</td>
               <td>{{player.name}}</td>
               <td>{{player.rank}}</td>
@@ -18,7 +21,35 @@
         </tbody>
       </table>
     </div>
-    <add-player callback="$ctrl.fetchPlayers()" ng-if="$ctrl.Auth.isLoggedIn()"></add-player>
-    <add-match callback="$ctrl.fetchPlayers()" ng-if="$ctrl.Auth.isLoggedIn()"></add-match>
+    <div class="row" >
+      <div class="table-responsive">
+        <table class="table table-striped matches-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th class="to-right">Points</th>
+              <th class="to-right">Player</th>
+              <th class="to-right">Score</th>
+              <th>-</th>
+              <th>Score</th>
+              <th>Player</th>
+              <th>Points</th>
+            </tr>
+            <tbody>
+              <md-progress-circular md-mode="indeterminate" md-diameter="96" class="loader" ng-if="$ctrl.loadingMatches"></md-progress-circular>
+              <tr ng-repeat="match in $ctrl.matches" ng-class="{'blur':$ctrl.loadingMatches}">
+                <td>{{$index+1}}</td>
+                <td>{{match.h_points}}</td>
+                <td>{{match.home}}</td>
+                <td>{{match.h_score}}</td>
+                <td>vs</td>
+                <td>{{match.a_score}}</td>
+                <td>{{match.away}}</td>
+                <td>{{match.a_points}}</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>

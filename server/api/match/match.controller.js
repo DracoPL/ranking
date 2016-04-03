@@ -78,42 +78,42 @@ export function show(req, res) {
 // Creates a new Match in the DB
 export function create(req, res) {
 
-  console.log(req.body);
+  var h_team = req.body.h_team;
+  var a_team = req.body.a_team;
 
-  var h_team = Player.findOne({name: req.query.h_team}, 'name rank');
-  var a_team = Player.findOne({name: req.query.a_team});
-
-  console.log(h_team);
-  console.log(a_team);
-
-  var h_score = req.query.h_score;
-  var a_score = req.query.a_score;
+  var h_score = req.body.h_score;
+  var a_score = req.body.a_score;
 
   var score_diff = Math.abs(h_score - a_score);
-  var gd_fix = (score_diff == 2) ? 1.19 : (7 + score_diff / 8);
+  var gd_fix = 1;
+    if (score_diff == 2) {
+      gd_fix = 1.19;
+    } else if (score_diff > 2) {
+      gd_fix = 7 + score_diff / 8;
+    }
   var result = 0.5;
     if (h_score > a_score) {
       result = 1;
     } else if (h_score < a_score) {
       result = 0;
     }
-  var rank_diff = h_team.tank - a_team.rank;
+  var rank_diff = h_team.rank - a_team.rank;
   var type = 10;
-  var expected_result = Math.pow(1/10, -rank_diff/400) + 1;
-  var points = type * gd_fix * (result - expected_result);
-  var h_points = (h_score > a_score) ? points : -points;
-  var a_points = (a_score > h_score) ? points : -points;
+  var expected_result = 1 / (Math.pow(10, -rank_diff/400) + 1);
+  var h_points = Math.round(type * gd_fix * (result - expected_result));
+  var a_points = - h_points;
 
-  console.log({
-    home: h_team.name,
-    away: a_team.name,
-    h_rank: h_team.rank,
-    a_rank: a_team.rank,
-    h_score: h_score,
-    a_score: a_score,
-    type: type,
-    h_points: h_points,
-    a_points: a_points
+  var h_player = Player.findOne({name: h_team.name}).exec().then(player => {
+      player.rank = player.rank + h_points;
+      player.save(function (err, player, numAffected) {
+        console.log(player);
+      });
+  });
+  var a_player = Player.findOne({name: a_team.name}).exec().then(player => {
+      player.rank = player.rank + a_points;
+      player.save(function (err, player, numAffected) {
+        console.log(player);
+      });
   });
 
   return Match.create({
