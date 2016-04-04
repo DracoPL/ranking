@@ -10,7 +10,6 @@ angular.module('rankingApp')
         isHome: "="
       },
       link: function (scope, element, attrs) {
-        console.log(scope.rankMatch);
         scope.result = 'loose';
         if((scope.isHome && scope.rankMatch.h_score > scope.rankMatch.a_score)
           || (!scope.isHome && scope.rankMatch.h_score < scope.rankMatch.a_score)){

@@ -39,11 +39,11 @@
               <md-progress-circular md-mode="indeterminate" md-diameter="96" class="loader" ng-if="$ctrl.loadingMatches"></md-progress-circular>
               <tr ng-repeat="match in $ctrl.matches" ng-class="{'blur':$ctrl.loadingMatches}">
                 <td>{{$index+1}}</td>
-                <td>{{match.home}} <match-label rank-match="match" is-home="true"/></td>
+                <td>{{match.home}}&nbsp<match-label rank-match="match" is-home="true"/></td>
                 <td>{{match.h_score}}</td>
                 <td>vs</td>
                 <td>{{match.a_score}}</td>
-                <td><match-label rank-match="match" is-home="false"/> {{match.away}}</td>
+                <td><match-label rank-match="match" is-home="false"/>&nbsp{{match.away}}</td>
               </tr>
           </tbody>
         </table>
