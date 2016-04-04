@@ -81,36 +81,36 @@ export function create(req, res) {
   var h_team = req.body.h_team;
   var a_team = req.body.a_team;
 
-  var h_score = req.body.h_score;
-  var a_score = req.body.a_score;
+  var hScore = req.body.hScore;
+  var aScore = req.body.aScore;
 
-  var score_diff = Math.abs(h_score - a_score);
+  var score_diff = Math.abs(hScore - aScore);
   var gd_fix = 1;
-    if (score_diff == 2) {
+    if (score_diff === 2) {
       gd_fix = 1.19;
     } else if (score_diff > 2) {
       gd_fix = 7 + score_diff / 8;
     }
   var result = 0.5;
-    if (h_score > a_score) {
+    if (hScore > aScore) {
       result = 1;
-    } else if (h_score < a_score) {
+    } else if (hScore < aScore) {
       result = 0;
     }
   var rank_diff = h_team.rank - a_team.rank;
   var type = 10;
   var expected_result = 1 / (Math.pow(10, -rank_diff/400) + 1);
-  var h_points = Math.round(type * gd_fix * (result - expected_result));
-  var a_points = - h_points;
+  var hPoints = Math.round(type * gd_fix * (result - expected_result));
+  var aPoints = - hPoints;
 
   var h_player = Player.findOne({name: h_team.name}).exec().then(player => {
-      player.rank = player.rank + h_points;
+      player.rank = player.rank + hPoints;
       player.save(function (err, player, numAffected) {
         console.log(player);
       });
   });
   var a_player = Player.findOne({name: a_team.name}).exec().then(player => {
-      player.rank = player.rank + a_points;
+      player.rank = player.rank + aPoints;
       player.save(function (err, player, numAffected) {
         console.log(player);
       });
@@ -119,13 +119,13 @@ export function create(req, res) {
   return Match.create({
     home: h_team.name,
     away: a_team.name,
-    h_rank: h_team.rank,
-    a_rank: a_team.rank,
-    h_score: h_score,
-    a_score: a_score,
+    hRank: h_team.rank,
+    aRank: a_team.rank,
+    hScore: hScore,
+    aScore: aScore,
     type: type,
-    h_points: h_points,
-    a_points: a_points
+    hPoints: hPoints,
+    aPoints: aPoints
   }).then(respondWithResult(res, 201))
     .catch(handleError(res));
 }

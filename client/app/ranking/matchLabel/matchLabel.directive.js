@@ -6,15 +6,14 @@ angular.module('rankingApp')
       templateUrl: 'app/ranking/matchLabel/matchLabel.html',
       restrict: 'E',
       scope: {
-        rankMatch: "=",
-        isHome: "="
+        rankMatch: '=',
+        isHome: '='
       },
-      link: function (scope, element, attrs) {
+      link: function (scope) {
         scope.result = 'loose';
-        if((scope.isHome && scope.rankMatch.h_score > scope.rankMatch.a_score)
-          || (!scope.isHome && scope.rankMatch.h_score < scope.rankMatch.a_score)){
+        if((scope.isHome && scope.rankMatch.hScore > scope.rankMatch.aScore) || (!scope.isHome && scope.rankMatch.hScore < scope.rankMatch.aScore)){
             scope.result = 'win';
-        } else if (scope.rankMatch.h_score == scope.rankMatch.a_score){
+        } else if (scope.rankMatch.hScore === scope.rankMatch.aScore){
           scope.result = 'draw';
         }
       }
