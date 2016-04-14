@@ -7,6 +7,7 @@
 import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
 import Player from '../api/player/player.model';
+import Competitions from '../api/competitions/competitions.model';
 
 Thing.find({}).remove()
   .then(() => {
@@ -60,6 +61,28 @@ Player.find({}).remove()
     }, {
       name: 'Shawass',
       rank: 120.2
+    })
+    .then(() => {
+      console.log('finished populating Players');
+    });
+  });
+
+Competitions.find({}).remove()
+  .then(() => {
+
+    Player.find().exec()
+      .then((res) => {
+        
+        var competition = {
+          name: 'Polish Open \'16',
+          type: 'bloodbowl',
+          players: res
+        };
+
+        Competitions.create(competition)
+        .then(() => {
+          console.log('finished populating Competition');
+        });
     });
   });
 

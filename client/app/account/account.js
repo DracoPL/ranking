@@ -11,7 +11,7 @@ angular.module('rankingApp')
       })
       .state('logout', {
         url: '/logout?referrer',
-        referrer: 'main',
+        referrer: 'ranking',
         template: '',
         controller: function($state, Auth) {
           var referrer = $state.params.referrer ||

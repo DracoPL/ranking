@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="col-lg-12">
+    <h1 class="page-header">Competitions</h1>
+    <div class="row" >
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+          </tr>
+          <tbody>
+            <md-progress-circular md-mode="indeterminate" md-diameter="96" class="loader" ng-if="$ctrl.loadingCompetitions"></md-progress-circular>
+            <tr ng-repeat="competition in $ctrl.competitions" ng-class="{'blur':$ctrl.loadingCompetitions}">
+              <td>{{$index+1}}</td>
+              <td><a ui-sref="competitionsShow({competitionId: competition._id})">{{competition.name}}</a></td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

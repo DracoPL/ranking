@@ -6,6 +6,10 @@ class NavbarController {
     {
       'title': 'Ranking',
       'state': 'ranking'
+    },
+    {
+      'title': 'Competitions',
+      'state': 'competitions'
     }
   ];
 
