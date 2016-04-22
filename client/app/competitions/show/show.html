@@ -28,7 +28,7 @@
 
     <div ng-if="$ctrl.Auth.isLoggedIn()">
       <form ng-submit="$ctrl.addPlayer()">
-        <div layout-gt-sm="row">
+        <div class="col col-8">
           <md-autocomplete
           md-selected-item="$ctrl.selectedItem"
           md-search-text="$ctrl.searchText"
@@ -41,11 +41,10 @@
           </md-item-template>
           <md-not-found>
             No players matching "{{$ctrl.searchText}}" were found. <add-player></add-player>
-            <a ng-click="$ctrl.newState(ctrl.searchText)">Create a new one!</a>
           </md-not-found>
           </md-autocomplete>
-          <md-button type="submit" class="md-raised md-primary" ng-disabled="!$ctrl.selectedItem">Add player</md-button>
         </div>
+          <md-button type="submit" class="md-raised md-primary" ng-disabled="!$ctrl.selectedItem">Add player</md-button>
       </form>
     </div>
   </div>

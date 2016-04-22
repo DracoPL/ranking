@@ -24,7 +24,7 @@ angular.module('rankingApp')
     };
 
     return {
-      template: '<md-button class="md-primary md-raised" ng-click="openDialog()">Add Player</md-button>',
+      template: '<a ng-click="openDialog()" href-void>Create new Player</a>',
       restrict: 'EA',
       scope: {
         callback: '&callback'
