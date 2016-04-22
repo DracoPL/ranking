@@ -31,12 +31,12 @@ function saveUpdates(updates) {
     var oldHomeScore = {
       points: entity.home.score.points,
       td: entity.home.score.td,
-      ko: entity.home.score.ko
+      cas: entity.home.score.cas
     };
     var oldAwayScore = {
       points: entity.away.score.points,
       td: entity.away.score.td,
-      ko: entity.away.score.ko
+      cas: entity.away.score.cas
     };
     // updating HOME player standing
     Standing.findOne({
@@ -47,17 +47,17 @@ function saveUpdates(updates) {
       if (matchPlayed) {
         homeStanding.score.points -= oldHomeScore.points;
         homeStanding.score.td -= oldHomeScore.td;
-        homeStanding.score.ko -= oldHomeScore.ko;
+        homeStanding.score.cas -= oldHomeScore.cas;
       }
 
       homeStanding.score.points += updates.home.score.points;
       homeStanding.score.td += updates.home.score.td;
-      homeStanding.score.ko += updates.home.score.ko;
+      homeStanding.score.cas += updates.home.score.cas;
 
       var newHomeScore = {
         points: homeStanding.score.points,
         td: homeStanding.score.td,
-        ko: homeStanding.score.ko
+        cas: homeStanding.score.cas
       };
 
       Standing.update({ _id: homeStanding.id }, { $set: { score: newHomeScore }}, () => {
@@ -74,17 +74,17 @@ function saveUpdates(updates) {
       if (matchPlayed) {
         awayStanding.score.points -= oldAwayScore.points;
         awayStanding.score.td -= oldAwayScore.td;
-        awayStanding.score.ko -= oldAwayScore.ko;
+        awayStanding.score.cas -= oldAwayScore.cas;
       }
 
       awayStanding.score.points += updates.away.score.points;
       awayStanding.score.td += updates.away.score.td;
-      awayStanding.score.ko += updates.away.score.ko;
+      awayStanding.score.cas += updates.away.score.cas;
 
       var newAwayScore = {
         points: awayStanding.score.points,
         td: awayStanding.score.td,
-        ko: awayStanding.score.ko
+        cas: awayStanding.score.cas
       };
 
       Standing.update({ _id: awayStanding.id }, { $set: { score: newAwayScore }}, () => {

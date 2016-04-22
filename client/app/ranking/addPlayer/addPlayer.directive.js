@@ -19,6 +19,9 @@ angular.module('rankingApp')
           if(!$scope.addAnother){
             $mdDialog.hide();
           }
+        }, (err) => {
+          console.log(err);
+          $scope.message = "Player with this name already exists.";
         });
       };
     };

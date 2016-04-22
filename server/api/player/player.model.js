@@ -3,7 +3,7 @@
 import mongoose from 'mongoose';
 
 var PlayerSchema = new mongoose.Schema({
-  name: {type: String, required: true},
+  name: {type: String, required: true, unique: true},
   rank: {type: Number}
 });
 

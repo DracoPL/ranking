@@ -122,7 +122,7 @@ export function begin(req, res) {
           score: {
             points: 0,
             td: 0,
-            ko: 0
+            cas: 0
           }
         },
         away: {
@@ -131,7 +131,7 @@ export function begin(req, res) {
           score: {
             points: 0,
             td: 0,
-            ko: 0
+            cas: 0
           }
         },
         round: 1
@@ -156,7 +156,7 @@ export function begin(req, res) {
         score: {
           points: 0,
           td: 0,
-          ko: 0
+          cas: 0
         },
         round: 1
       };
@@ -199,7 +199,7 @@ export function newRound(req, res) {
             score: {
               points: 0,
               td: 0,
-              ko: 0
+              cas: 0
             }
           },
           away: {
@@ -208,7 +208,7 @@ export function newRound(req, res) {
             score: {
               points: 0,
               td: 0,
-              ko: 0
+              cas: 0
             }
           },
           round: competition.currentRound
@@ -233,7 +233,7 @@ export function newRound(req, res) {
         score: {
           points: item.score.points,
           td: item.score.td,
-          ko: item.score.ko
+          cas: item.score.cas
         },
         round: competition.currentRound
       };

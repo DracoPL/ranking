@@ -103,7 +103,7 @@ Competitions.find({}).remove()
                   score: {
                     points: score,
                     td: score + 2,
-                    ko: score + 5,
+                    cas: score + 5,
                   },
                   round: 1
                 };
@@ -124,7 +124,7 @@ Competitions.find({}).remove()
                   score: {
                     points: score,
                     td: score + 2,
-                    ko: score + 5,
+                    cas: score + 5,
                   },
                   round: 2
                 };
@@ -159,7 +159,7 @@ Competitions.find({}).remove()
                     score: {
                       points: 0,
                       td: 0,
-                      ko: 0
+                      cas: 0
                     }
                   },
                   away: {
@@ -168,7 +168,7 @@ Competitions.find({}).remove()
                     score: {
                       points: 0,
                       td: 0,
-                      ko: 0
+                      cas: 0
                     }
                   },
                   round: 1,
@@ -188,7 +188,7 @@ Competitions.find({}).remove()
                     score: {
                       points: 0,
                       td: 0,
-                      ko: 0
+                      cas: 0
                     }
                   },
                   away: {
@@ -197,7 +197,7 @@ Competitions.find({}).remove()
                     score: {
                       points: 0,
                       td: 0,
-                      ko: 0
+                      cas: 0
                     }
                   },
                   round: 2
