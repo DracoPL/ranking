@@ -11,6 +11,8 @@
 
 import _ from 'lodash';
 import Competitions from './competitions.model';
+import Matches from '../matches/matches.model';
+import Standing from '../standing/standing.model';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -23,7 +25,7 @@ function respondWithResult(res, statusCode) {
 
 function saveUpdates(updates) {
   return function(entity) {
-    var updated = _.merge(entity, updates);
+    var updated = _.extend(entity, updates);
     return updated.save()
       .then(updated => {
         return updated;
@@ -99,4 +101,172 @@ export function destroy(req, res) {
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
+}
+
+export function begin(req, res) {
+  Competitions.findById(req.params.id).exec().then(competition => {
+    var players = competition.players.slice();
+    var shuffledPlayers = shuffle(players);
+    var playersCount = shuffledPlayers.length;
+    var matches = [];
+    for (var i = 0; playersCount > i; i = i + 2) {
+      var matchPlayers = shuffledPlayers.splice(0,2);
+      var match = {
+        competition: {
+          id: competition._id,
+          name: competition.name
+        },
+        home: {
+          id: matchPlayers[0]._id,
+          name: matchPlayers[0].name,
+          score: {
+            points: 0,
+            td: 0,
+            ko: 0
+          }
+        },
+        away: {
+          id: matchPlayers[1]._id,
+          name: matchPlayers[1].name,
+          score: {
+            points: 0,
+            td: 0,
+            ko: 0
+          }
+        },
+        round: 1
+      };
+
+      matches.push(match);
+    }
+    Matches.create(matches).then(() => {
+      console.log('Matches created');
+    });
+
+    var roundOneStandings = competition.players.map(function(item) {
+      var standing = {
+        competition: {
+          id: competition._id,
+          name: competition.name
+        },
+        player: {
+          id: item._id,
+          name: item.name
+        },
+        score: {
+          points: 0,
+          td: 0,
+          ko: 0
+        },
+        round: 1
+      };
+
+      return standing;
+    });
+
+    Standing.create(roundOneStandings).then( () => {
+      console.log('Round one standing created');
+    });
+
+    competition.started = true;
+    competition.rounds.push(1);
+    competition.save().then(()=>{
+      res.status(204).end();
+    });
+  });
+}
+
+export function newRound(req, res) {
+  Competitions.findById(req.params.id).exec().then(competition => {
+
+    competition.currentRound++;
+
+    Standing.find({'competition.id': competition.id, 'round': competition.currentRound - 1})
+    .sort({'score.points': -1}).exec().then(standings => {
+      var standingPlayers = standings.slice();
+      var playersCount = standingPlayers.length;
+      var matches = [];
+      for (var i = 0; playersCount > i; i = i + 2) {
+        var matchPlayers = standingPlayers.splice(0,2);
+        var match = {
+          competition: {
+            id: competition._id,
+            name: competition.name
+          },
+          home: {
+            id: matchPlayers[0].player.id,
+            name: matchPlayers[0].player.name,
+            score: {
+              points: 0,
+              td: 0,
+              ko: 0
+            }
+          },
+          away: {
+            id: matchPlayers[1].player.id,
+            name: matchPlayers[1].player.name,
+            score: {
+              points: 0,
+              td: 0,
+              ko: 0
+            }
+          },
+          round: competition.currentRound
+        };
+
+        matches.push(match);
+      }
+      Matches.create(matches).then(() => {
+        console.log('Matches created');
+      })
+
+    var newRoundStandings = standings.map(function(item) {
+      var standing = {
+        competition: {
+          id: competition._id,
+          name: competition.name
+        },
+        player: {
+          id: item.player.id,
+          name: item.player.name
+        },
+        score: {
+          points: item.score.points,
+          td: item.score.td,
+          ko: item.score.ko
+        },
+        round: competition.currentRound
+      };
+
+      return standing;
+    });
+
+    Standing.create(newRoundStandings).then( () => {
+      console.log('New round standings created');
+    });
+  });
+
+    competition.rounds.push(competition.currentRound);
+    competition.save().then(()=>{
+      res.status(204).end();
+    })
+  });
+}
+
+function shuffle(array) {
+  var m = array.length, t, i;
+
+  // While there remain elements to shuffle…
+  while (m) {
+
+    // Pick a remaining element…
+    i = Math.floor(Math.random() * m--);
+
+    // And swap it with the current element.
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+
+  return array;
 }

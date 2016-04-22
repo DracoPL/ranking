@@ -8,9 +8,12 @@ var CompetitionsSchema = new mongoose.Schema({
   players: [
     {
       _id: mongoose.Schema.Types.ObjectId,
-      name: String
+      name: String,
     }
-  ]
+  ],
+  rounds: [Number],
+  currentRound: { type: Number, default: 1 },
+  started: { type: Boolean, default: false }
 });
 
 export default mongoose.model('Competitions', CompetitionsSchema);

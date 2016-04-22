@@ -1,22 +1,118 @@
 <div class="container">
   <div class="col-lg-12">
     <h1 class="page-header">{{ $ctrl.competition.name }}</h1>
+    <md-button ng-if="$ctrl.Auth.isLoggedIn() && $ctrl.competition.started" class="md-raised md-primary" ng-click="$ctrl.confirmStartNewRound()">Start new round</md-button>
+    <md-button ng-if="$ctrl.Auth.isLoggedIn() && !$ctrl.competition.started && $ctrl.everyMatchPlayed" class="md-raised md-primary" ng-click="$ctrl.confirmBeginCompetition()">Begin competition</md-button>
+
+    <div ng-if="!$ctrl.competition.started">
       <h2 class="page-header">Players</h2>
-    <div class="row" >
-      <table class="table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-          </tr>
-          <tbody>
-            <!-- <md-progress-circular md-mode="indeterminate" md-diameter="96" class="loader" ng-if="$ctrl.loadingCompetitions"></md-progress-circular> -->
-            <tr ng-repeat="player in $ctrl.competition.players" ng-class="{'blur':$ctrl.loadingCompetitions}">
-              <td>{{$index+1}}</td>
-              <td>{{player.name}}</a></td>
+      <div class="row" >
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+              <th></th>
             </tr>
-        </tbody>
-      </table>
+            <tbody>
+              <tr ng-repeat="player in $ctrl.competition.players">
+                <td>{{$index+1}}</td>
+                <td>{{player.name}}</td>
+                <td>
+                  <md-button ng-click="$ctrl.removePlayer(player)">X</md-button>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+
+    <div ng-if="$ctrl.Auth.isLoggedIn()">
+      <form ng-submit="$ctrl.addPlayer()">
+        <div layout-gt-sm="row">
+          <md-autocomplete
+          md-selected-item="$ctrl.selectedItem"
+          md-search-text="$ctrl.searchText"
+          md-items="item in $ctrl.querySearch($ctrl.searchText)"
+          md-item-text="item.name"
+          md-min-length="0"
+          placeholder="Search for player">
+          <md-item-template>
+            <span md-highlight-text="$ctrl.searchText" md-highlight-flags="^i">{{item.name}}</span>
+          </md-item-template>
+          <md-not-found>
+            No players matching "{{$ctrl.searchText}}" were found. <add-player></add-player>
+            <a ng-click="$ctrl.newState(ctrl.searchText)">Create a new one!</a>
+          </md-not-found>
+          </md-autocomplete>
+          <md-button type="submit" class="md-raised md-primary" ng-disabled="!$ctrl.selectedItem">Add player</md-button>
+        </div>
+      </form>
     </div>
+  </div>
+
+  <div ng-cloak>
+    <md-content>
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab ng-repeat="round in $ctrl.competition.rounds | orderBy : '' : true" label="{{round}}">
+          <md-content class="md-padding">
+            <h2 class="page-header">Round {{ round }} matches</h2>
+            <div class="row" >
+              <div class="table-responsive">
+                <table class="table table-striped matches-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th class="to-right">Player</th>
+                      <th class="to-right">TD</th>
+                      <th></th>
+                      <th>TD</th>
+                      <th>Player</th>
+                      <th></th>
+                    </tr>
+                    <tbody>
+                      <md-progress-circular md-mode="indeterminate" md-diameter="96" class="loader" ng-if="$ctrl.loadingMatches"></md-progress-circular>
+                      <tr ng-repeat="match in $ctrl.matches | filter : { round: round }" ng-class="{'blur':$ctrl.loadingMatches}">
+                        <td>{{$index+1}}</td>
+                        <td>{{match.home.name}}&nbsp<match-label ng-if="match.played" match-object="match" is-home="true"></match-label></td>
+                        <td>{{match.home.score.td}}</td>
+                        <td>vs</td>
+                        <td>{{match.away.score.td}}</td>
+                        <td><match-label ng-if="match.played" match-object="match" is-home="false"></match-label>&nbsp{{match.away.name}}</td>
+                        <td><edit-match ng-if="$ctrl.Auth.isLoggedIn() && $ctrl.competition.currentRound == match.round" match-object="match" callback="$ctrl.refreshMatchesAndStanding()"></edit-match></td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <h2 class="page-header">Round {{round}} standing</h2>
+            <div class="row" >
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Points</th>
+                    <th>TD</th>
+                    <th>KO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <md-progress-circular md-mode="indeterminate" md-diameter="96" class="loader" ng-if="$ctrl.loadingStandings"></md-progress-circular>
+                  <tr ng-repeat="standing in $ctrl.standings | filter : { round: round } | orderBy : '-score.points'" ng-class="{'blur':$ctrl.loadingStandings}">
+                    <td>{{$index+1}}</td>
+                    <td>{{standing.player.name}}</a></td>
+                    <td>{{standing.score.points}}</td>
+                    <td>{{standing.score.td}}</td>
+                    <td>{{standing.score.ko}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-content>
+  </div>
+
   </div>
 </div>

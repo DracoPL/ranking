@@ -10,11 +10,15 @@ angular.module('rankingApp', [
   'ui.router',
   'ui.bootstrap',
   'validation.match',
-  'ngMaterial'
+  'ngMaterial',
+  'restangular'
 ])
-  .config(function($urlRouterProvider, $locationProvider) {
+  .config(function($urlRouterProvider, $locationProvider, RestangularProvider) {
     $urlRouterProvider
-      .otherwise('/ranking');
+      .otherwise('/competitions');
 
     $locationProvider.html5Mode(true);
+
+    RestangularProvider.setBaseUrl('/api/');
+    RestangularProvider.setRestangularFields({id: "_id"});
   });

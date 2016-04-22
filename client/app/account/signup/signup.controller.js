@@ -23,7 +23,7 @@ class SignupController {
       })
       .then(() => {
         // Account created, redirect to home
-        this.$state.go('ranking');
+        this.$state.go('competitions');
       })
       .catch(err => {
         err = err.data;

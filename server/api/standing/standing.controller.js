@@ -1,16 +1,16 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/players              ->  index
- * POST    /api/players              ->  create
- * GET     /api/players/:id          ->  show
- * PUT     /api/players/:id          ->  update
- * DELETE  /api/players/:id          ->  destroy
+ * GET     /api/standings              ->  index
+ * POST    /api/standings              ->  create
+ * GET     /api/standings/:id          ->  show
+ * PUT     /api/standings/:id          ->  update
+ * DELETE  /api/standings/:id          ->  destroy
  */
 
 'use strict';
 
 import _ from 'lodash';
-import Player from './player.model';
+import Standing from './standing.model';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -59,47 +59,43 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Players
+// Gets a list of Standings
 export function index(req, res) {
-  if(req.query.name){
-    req.query.name = new RegExp(req.query.name, 'i');
-  }
-
-  return Player.find(req.query).sort({'name': 1}).exec()
+  return Standing.find(req.query).exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Player from the DB
+// Gets a single Standing from the DB
 export function show(req, res) {
-  return Player.findById(req.params.id).exec()
+  return Standing.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Creates a new Player in the DB
+// Creates a new Standing in the DB
 export function create(req, res) {
-  return Player.create(req.body)
+  return Standing.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing Player in the DB
+// Updates an existing Standing in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  return Player.findById(req.params.id).exec()
+  return Standing.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Player from the DB
+// Deletes a Standing from the DB
 export function destroy(req, res) {
-  return Player.findById(req.params.id).exec()
+  return Standing.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));

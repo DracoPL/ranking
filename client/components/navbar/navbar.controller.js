@@ -3,10 +3,10 @@
 class NavbarController {
   //start-non-standard
   menu = [
-    {
-      'title': 'Ranking',
-      'state': 'ranking'
-    },
+    // {
+    //   'title': 'Ranking',
+    //   'state': 'ranking'
+    // },
     {
       'title': 'Competitions',
       'state': 'competitions'
