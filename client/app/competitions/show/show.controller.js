@@ -12,6 +12,7 @@ class CompetitionsShowComponent {
     this.$state = $state;
     this.Auth = Auth;
     this.$mdDialog = $mdDialog;
+    this.selectedPlayerInMatch = null;
   }
 
   fetchMatches() {
@@ -116,6 +117,67 @@ class CompetitionsShowComponent {
     .cancel('Cancel');
     ctrl.$mdDialog.show(confirm).then(function() {
       ctrl.startNewRound();
+    });
+  }
+
+  selectPlayer (match, isHome, playerName) {
+    this.selectedPlayerInMatch = {
+      match: match,
+      isHome: isHome,
+      playerName: playerName
+    };
+  }
+
+  replacePlayers (match, isHome) {
+    var ctrl = this;
+
+    if (ctrl.selectedPlayerInMatch) {
+      var selectedPlayerInMatchCopy = {};
+      angular.copy(ctrl.selectedPlayerInMatch, selectedPlayerInMatchCopy);
+
+      //Yeah, this sux to read ...
+      if (ctrl.selectedPlayerInMatch.isHome && isHome) {
+        ctrl.selectedPlayerInMatch.match.home = angular.copy(match.home);
+      } else if (ctrl.selectedPlayerInMatch.isHome && !isHome) {
+        ctrl.selectedPlayerInMatch.match.home = angular.copy(match.away);
+      } else if (!ctrl.selectedPlayerInMatch.isHome && isHome) {
+        ctrl.selectedPlayerInMatch.match.away = angular.copy(match.home);
+      } else if (!ctrl.selectedPlayerInMatch.isHome && !isHome) {
+        ctrl.selectedPlayerInMatch.match.away = angular.copy(match.away);
+      }
+
+      ctrl.selectedPlayerInMatch.match.save().then(response => {
+        console.log(response);
+      });
+
+      if (isHome && selectedPlayerInMatchCopy.isHome) {
+        match.home = angular.copy(selectedPlayerInMatchCopy.match.home);
+      } else if (!isHome && selectedPlayerInMatchCopy.isHome) {
+        match.away = angular.copy(selectedPlayerInMatchCopy.match.home);
+      } else if (isHome && !selectedPlayerInMatchCopy.isHome) {
+        match.home = angular.copy(selectedPlayerInMatchCopy.match.away);
+      } else if (!isHome && !selectedPlayerInMatchCopy.isHome) {
+        match.away = angular.copy(selectedPlayerInMatchCopy.match.away);
+      }
+
+      match.save().then(response => {
+        console.log(response);
+      });
+
+      ctrl.selectedPlayerInMatch = null;
+    }
+  }
+
+  confirmReplacePlayers (match, isHome, playerName) {
+    var ctrl = this;
+    var confirm = ctrl.$mdDialog.confirm()
+    .title('Confirm players replacing')
+    .textContent('Replace [' + ctrl.selectedPlayerInMatch.playerName + '] with [' + playerName + '] ?')
+    .ariaLabel('Replace players?')
+    .ok('Replace')
+    .cancel('Cancel');
+    ctrl.$mdDialog.show(confirm).then(function() {
+      ctrl.replacePlayers(match, isHome);
     });
   }
 }

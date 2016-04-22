@@ -9,6 +9,7 @@ angular.module('rankingApp')
       };
 
       $scope.saveMatch = function () {
+        $scope.match.played = 1;
         $scope.match.save().then(()=>{
           $mdDialog.hide();
           if ($scope.callback) {

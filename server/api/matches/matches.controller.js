@@ -94,10 +94,6 @@ function saveUpdates(updates) {
   } catch (err) {
     console.log(err.message);
   }
-  // });
-
-  updates.played = 1;
-
     var updated = _.extend(entity, updates);
     return updated.save()
     .then(updated => {

@@ -72,11 +72,35 @@
                       <md-progress-circular md-mode="indeterminate" md-diameter="96" class="loader" ng-if="$ctrl.loadingMatches"></md-progress-circular>
                       <tr ng-repeat="match in $ctrl.matches | filter : { round: round }" ng-class="{'blur':$ctrl.loadingMatches}">
                         <td>{{$index+1}}</td>
-                        <td>{{match.home.name}}&nbsp<match-label ng-if="match.played" match-object="match" is-home="true"></match-label></td>
+                        <td>
+                          <span uib-dropdown ng-if="$ctrl.Auth.isLoggedIn() && !match.played">
+                            <a href id="simple-dropdown" uib-dropdown-toggle>
+                              {{match.home.name}}
+                            </a>
+                            <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="Player actions">
+                              <li><a href ng-click="$ctrl.selectPlayer(match, true, match.home.name)">Select</a></li>
+                              <li><a href ng-if="$ctrl.selectedPlayerInMatch" ng-click="$ctrl.confirmReplacePlayers(match, true, match.home.name)">: {{$ctrl.selectedPlayerInMatch.playerName}}</a></li>
+                            </ul>
+                          </span>
+                          <span ng-hide="$ctrl.Auth.isLoggedIn() && !match.played">{{match.home.name}}</span>
+                          &nbsp<match-label ng-if="match.played" match-object="match" is-home="true"></match-label>
+                        </td>
                         <td>{{match.home.score.td}}</td>
                         <td>vs</td>
                         <td>{{match.away.score.td}}</td>
-                        <td><match-label ng-if="match.played" match-object="match" is-home="false"></match-label>&nbsp{{match.away.name}}</td>
+                        <td>
+                          <match-label ng-if="match.played" match-object="match" is-home="false"></match-label>&nbsp
+                          <span uib-dropdown ng-if="$ctrl.Auth.isLoggedIn() && !match.played">
+                            <a href id="simple-dropdown" uib-dropdown-toggle>
+                              {{match.away.name}}
+                            </a>
+                            <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="Player actions">
+                              <li><a href ng-click="$ctrl.selectPlayer(match, false, match.away.name)">Select</a></li>
+                              <li><a href ng-if="$ctrl.selectedPlayerInMatch" ng-click="$ctrl.confirmReplacePlayers(match, false, match.away.name)">Replace: {{$ctrl.selectedPlayerInMatch.playerName}}</a></li>
+                            </ul>
+                          </span>
+                          <span ng-hide="$ctrl.Auth.isLoggedIn() && !match.played">{{match.away.name}}</span>
+                        </td>
                         <td><edit-match ng-if="$ctrl.Auth.isLoggedIn() && $ctrl.competition.currentRound == match.round" match-object="match" callback="$ctrl.refreshMatchesAndStanding()"></edit-match></td>
                       </tr>
                   </tbody>
