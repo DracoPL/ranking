@@ -148,7 +148,7 @@ Competitions.find({}).remove()
               var matches = [];
               for (var i = 0; playersCount > i; i = i + 2) {
                 var matchPlayers = shuffledPlayers.splice(0,2);
-                var match = {
+                var roundOneMatch = {
                   competition: {
                     id: competition._id,
                     name: competition.name
@@ -175,9 +175,9 @@ Competitions.find({}).remove()
                   played: true
                 };
 
-                matches.push(match);
+                matches.push(roundOneMatch);
 
-                var match = {
+                var roundTwoMatch = {
                   competition: {
                     id: competition._id,
                     name: competition.name
@@ -203,7 +203,7 @@ Competitions.find({}).remove()
                   round: 2
                 };
 
-                matches.push(match);
+                matches.push(roundTwoMatch);
               }
 
               Matches.create(matches).then(() => {

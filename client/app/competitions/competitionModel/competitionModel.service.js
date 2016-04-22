@@ -6,5 +6,5 @@ angular.module('rankingApp')
         return model;
     });
 
-    return Restangular.all("competitions");
+    return Restangular.all('competitions');
   });

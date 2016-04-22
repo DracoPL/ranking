@@ -51,7 +51,7 @@ class CompetitionsShowComponent {
   querySearch (query) {
      return this.$http.get('/api/players', {params: {'name': query}}).then(response => {
        return response.data;
-     })
+     });
    }
 
   addPlayer () {
@@ -71,13 +71,13 @@ class CompetitionsShowComponent {
   updateCompetition () {
     this.competition.save().then(response => {
       this.competition = response;
-    })
+    });
   }
 
   beginCompetition () {
-    this.Restangular.one('competitions', this.$stateParams.competitionId).post('begin').then(response => {
-      return this.$state.reload();;
-    })
+    this.Restangular.one('competitions', this.$stateParams.competitionId).post('begin').then(() => {
+      return this.$state.reload();
+    });
   }
 
   confirmBeginCompetition (ev) {
@@ -92,7 +92,7 @@ class CompetitionsShowComponent {
     this.$mdDialog.show(confirm).then(function() {
       ctrl.beginCompetition();
     });
-  };
+  }
 
   refreshMatchesAndStanding () {
     this.fetchMatches();
@@ -100,9 +100,9 @@ class CompetitionsShowComponent {
   }
 
   startNewRound () {
-    this.Restangular.one('competitions', this.$stateParams.competitionId).post('new-round').then(response => {
-      return this.$state.reload();;
-    })
+    this.Restangular.one('competitions', this.$stateParams.competitionId).post('new-round').then(() => {
+      return this.$state.reload();
+    });
   }
 
   confirmStartNewRound (ev) {
@@ -117,7 +117,7 @@ class CompetitionsShowComponent {
     ctrl.$mdDialog.show(confirm).then(function() {
       ctrl.startNewRound();
     });
-  };
+  }
 }
 
 angular.module('rankingApp')

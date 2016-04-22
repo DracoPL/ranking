@@ -20,5 +20,5 @@ angular.module('rankingApp', [
     $locationProvider.html5Mode(true);
 
     RestangularProvider.setBaseUrl('/api/');
-    RestangularProvider.setRestangularFields({id: "_id"});
+    RestangularProvider.setRestangularFields({id: '_id'});
   });

@@ -3,7 +3,7 @@
 angular.module('rankingApp')
   .directive('editMatch', function ($mdMedia, $mdDialog) {
 
-    var FormController = function($scope, $http, $timeout) {
+    var FormController = function($scope) {
       $scope.closeDialog = function() {
         $mdDialog.hide();
       };
