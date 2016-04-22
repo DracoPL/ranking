@@ -56,16 +56,20 @@ class CompetitionsShowComponent {
    }
 
   addPlayer () {
-   var sorted_players = this.competition.players.slice().sort( function (a, b) {
-      if(a.name < b.name) return -1;
-      if(a.name > b.name) return 1;
+   var sortedPlayers = this.competition.players.slice().sort( function (a, b) {
+      if(a.name < b.name) {
+        return -1;
+      }
+      if(a.name > b.name) {
+        return 1;
+      }
       return 0;
     });
 
    var duplicates = [];
    for (var i = 0; i < this.competition.players.length - 1; i++) {
-       if (sorted_players[i + 1].name == sorted_players[i].name) {
-           duplicates.push(sorted_players[i]);
+       if (sortedPlayers[i + 1].name === sortedPlayers[i].name) {
+           duplicates.push(sortedPlayers[i]);
        }
    }
 

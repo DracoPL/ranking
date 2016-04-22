@@ -9,7 +9,7 @@ angular.module('rankingApp')
       };
 
       $scope.saveMatch = function () {
-        if(($scope.match.home.score.points + $scope.match.away.score.points)== 0) {
+        if(($scope.match.home.score.points + $scope.match.away.score.points) === 0) {
           $scope.pointsEqualZero = true;
         } else {
           $scope.match.played = 1;
@@ -27,7 +27,7 @@ angular.module('rankingApp')
           $scope.match.home.score.points = 4;
           $scope.match.away.score.points = 0;
 
-          if ($scope.match.home.score.td - $scope.match.away.score.td == 1) {
+          if ($scope.match.home.score.td - $scope.match.away.score.td === 1) {
             $scope.match.away.score.points += 1;
           }
         }
@@ -35,15 +35,15 @@ angular.module('rankingApp')
           $scope.match.home.score.points = 0;
           $scope.match.away.score.points = 4;
 
-          if ($scope.match.away.score.td - $scope.match.home.score.td == 1) {
+          if ($scope.match.away.score.td - $scope.match.home.score.td === 1) {
             $scope.match.home.score.points += 1;
           }
         }
-        if ($scope.match.home.score.td == $scope.match.away.score.td) {
+        if ($scope.match.home.score.td === $scope.match.away.score.td) {
           $scope.match.home.score.points = 2;
           $scope.match.away.score.points = 2;
         }
-      }
+      };
     };
 
     return {

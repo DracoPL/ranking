@@ -21,7 +21,7 @@ angular.module('rankingApp')
           }
         }, (err) => {
           console.log(err);
-          $scope.message = "Player with this name already exists.";
+          $scope.message = 'Player with this name already exists.';
         });
       };
     };
