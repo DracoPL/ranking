@@ -56,37 +56,26 @@ class CompetitionsShowComponent {
    }
 
   addPlayer () {
-   var sortedPlayers = this.competition.players.slice().sort( function (a, b) {
-      if(a.name < b.name) {
-        return -1;
-      }
-      if(a.name > b.name) {
-        return 1;
-      }
-      return 0;
-    });
+   var ctrl = this;
 
-   var duplicates = [];
-   for (var i = 0; i < this.competition.players.length - 1; i++) {
-       if (sortedPlayers[i + 1].name === sortedPlayers[i].name) {
-           duplicates.push(sortedPlayers[i]);
-       }
-   }
+   var hasDuplicates = ctrl.competition.players.some((element) => {
+     return (element.name === ctrl.selectedItem.name);
+   });
 
-   if (duplicates.length > 0) {
-     this.$mdDialog.show(
-      this.$mdDialog.alert()
+   if (hasDuplicates) {
+     ctrl.$mdDialog.show(
+      ctrl.$mdDialog.alert()
         .clickOutsideToClose(true)
         .title('Player [' + this.selectedItem.name + '] is already added.')
         .ariaLabel('This player is already added.')
         .ok('Got it!')
     );
    } else {
-     this.competition.players.push(this.selectedItem);
-     this.selectedItem = '';
-     this.searchText = '';
+     ctrl.competition.players.push(ctrl.selectedItem);
+     ctrl.selectedItem = '';
+     ctrl.searchText = '';
 
-     this.updateCompetition();
+     ctrl.updateCompetition();
    }
   }
 
