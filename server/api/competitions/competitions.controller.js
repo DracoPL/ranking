@@ -182,7 +182,7 @@ export function newRound(req, res) {
     competition.currentRound++;
 
     Standing.find({'competition.id': competition.id, 'round': competition.currentRound - 1})
-    .sort({'score.points': -1}).exec().then(standings => {
+    .sort({'score.points': -1, 'score.td': -1, 'score.kos': -1}).exec().then(standings => {
       var standingPlayers = standings.slice();
       var playersCount = standingPlayers.length;
       var matches = [];
