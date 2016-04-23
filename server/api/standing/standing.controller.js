@@ -61,7 +61,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of Standings
 export function index(req, res) {
-  return Standing.find(req.query).sort({"score.points": -1, "score.td": -1, "score.cas": -1}).exec()
+  return Standing.find(req.query).sort({"score.points": -1, "score.tdCasTotal": -1}).exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

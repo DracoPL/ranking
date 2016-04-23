@@ -54,10 +54,13 @@ function saveUpdates(updates) {
       homeStanding.score.td += updates.home.score.td;
       homeStanding.score.cas += updates.home.score.cas;
 
+      homeStanding.score.tdCasTotal = homeStanding.score.td + homeStanding.score.cas;
+
       var newHomeScore = {
         points: homeStanding.score.points,
         td: homeStanding.score.td,
-        cas: homeStanding.score.cas
+        cas: homeStanding.score.cas,
+        tdCasTotal: homeStanding.score.tdCasTotal
       };
 
       Standing.update({ _id: homeStanding.id }, { $set: { score: newHomeScore }}, () => {
@@ -81,10 +84,13 @@ function saveUpdates(updates) {
       awayStanding.score.td += updates.away.score.td;
       awayStanding.score.cas += updates.away.score.cas;
 
+      awayStanding.score.tdCasTotal = awayStanding.score.td + awayStanding.score.cas;
+
       var newAwayScore = {
         points: awayStanding.score.points,
         td: awayStanding.score.td,
-        cas: awayStanding.score.cas
+        cas: awayStanding.score.cas,
+        tdCasTotal: awayStanding.score.tdCasTotal
       };
 
       Standing.update({ _id: awayStanding.id }, { $set: { score: newAwayScore }}, () => {
