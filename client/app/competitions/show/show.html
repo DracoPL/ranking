@@ -79,7 +79,7 @@
                             </a>
                             <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="Player actions">
                               <li><a href ng-click="$ctrl.selectPlayer(match, true, match.home.name)">Select</a></li>
-                              <li><a href ng-if="$ctrl.selectedPlayerInMatch" ng-click="$ctrl.confirmReplacePlayers(match, true, match.home.name)">: {{$ctrl.selectedPlayerInMatch.playerName}}</a></li>
+                              <li><a href ng-if="$ctrl.selectedPlayerInMatch" ng-click="$ctrl.confirmReplacePlayers(match, true, match.home.name)">Replace: {{$ctrl.selectedPlayerInMatch.playerName}}</a></li>
                             </ul>
                           </span>
                           <span ng-hide="$ctrl.Auth.isLoggedIn() && !match.played">{{match.home.name}}</span>
