@@ -233,7 +233,8 @@ export function newRound(req, res) {
         score: {
           points: item.score.points,
           td: item.score.td,
-          cas: item.score.cas
+          cas: item.score.cas,
+          tdCasTotal: item.score.td + item.score.cas
         },
         round: competition.currentRound
       };
